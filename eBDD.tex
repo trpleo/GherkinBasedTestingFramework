@@ -13,7 +13,6 @@
 %% Support sites:
 %% http://www.michaelshell.org/tex/ieeetran/
 %% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
-%% and
 %% http://www.ieee.org/
 
 %%*************************************************************************
@@ -407,14 +406,29 @@ Software projects are hard to deliver and significant part of the complexity com
 
 \section{Introduction}
 % no \IEEEPARstart
-This demo file is intended to serve as a ``starter file''
-for IEEE conference papers produced under \LaTeX\ using
-IEEEtran.cls version 1.8 and later.
+A software is a model of reality. Like a map: must represent the reality with enough precision to give one the capability to find a suitable path from point A to B, but cannot describe the reality in its full depth. Cartographers are dealing with this "resolution" problem since the dawn of civilization, which gives them enough time to deal with this problem. Software developers not so lucky. They have much less time to figure out how to describe reality in a useful, but not unnecessarily complex way.
+
+Finding the most effective way to represent reality is something evolution dealing with rather successfully. Therefore it seems reasonable to apply its methods in software specification and development, in order to find the "the minimum set of satisfactory requirements". A requirement is "satisfactory" if it compliant with the current knowledge of a system and doesn't contradict any of the existing description. A given set of requirements is "minimal" if there's no redundant definition of features.
+
+To have such a representation, the process, which help define the minimum set of satisfactory requirements are the following:
+\begin{enumerate}
+  \item the medium of information flow must exists. (Gherkin language and grammar in the Feature files)
+  \item the selection process and criteria must exists (meetings, where the steak holders evolve the scenarios and notions)
+  \item the iteration process must be defined (sprints, where the different scenarios are created)
+  \item population must be defined (the population is the list of the scenarios under and/or effected but the current development phase)
+\end{enumerate}
+
+An other problem which developers face with in a general case is testing the different APIs of the system is under development. 
+
+In order to have an effective testing method, it must be ensured that all the APIs (RESTful APIs, Queues, UIs, Mobile apps) of the system is tested as well. However, the problems here are the following:
+\begin{enumerate}
+    \item a
+\end{enumerate}
+-- need find a method to work on all the channels
 % You must have at least 2 lines in the paragraph with the drop letter
 % (should never be an issue)
-I wish you the best of success.
 
-\hfill mds
+\hfill Istvan, Papp
  
 \hfill February 27, 2019
 
@@ -552,7 +566,7 @@ The authors would like to thank...
 % <OR> manually copy in the resultant .bbl file
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
-\begin{thebibliography}
+\begin{thebibliography}{1}
 \bibitem{IEEEhowto:a}
 a
 \bibitem{IEEEhowto:b}
