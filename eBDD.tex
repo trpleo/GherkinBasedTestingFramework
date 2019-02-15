@@ -331,7 +331,7 @@
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
 % Do not put math or special symbols in the title.
-\title{Effective system testing put business value into focus}
+\title{Evolutionary system specification with 'annotated Gherkin' syntax}
 
 
 % author names and affiliations
@@ -384,7 +384,17 @@ Email: andras.sevcsik@finastra.com}}
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
-Software projects are hard to deliver and significant part of the complexity comes from the severity of reasoning about the correctness of the product. This hardness is twofold: a) how to define the requirements and b) how to proof the compliance of implementation to specification. During the years different methods emerge to solve this problem. In this study we will describe the way how and why BDD as a framework was selected, how was it extended to tackle the aforementioned problems. Though the focus of this paper is the Gherkin language and its extension, the development process will be described as well. This is necessary, since the evolutionary stages of the scenarios are reflects to the development process. The updated Gherkin grammar and tailored BDD process mitigate the risk of the divergence of specification and implementation, while maximize the effectiveness of the feature descriptions to make it possible to test RESTful APIs, UIs, etc through the same process. Based on empirical data this has adjunct benefits too, such as quicker catch up of new team members, shortened bug fixes. The adjusted BDD process described in this paper called by us "evolutionary BDD" or eBDD.
+Software projects are hard to deliver and significant part of the complexity comes from the severity of reasoning about the correctness of the product. This hardness is twofold: a) how to define the requirements and b) how to proof the compliance of implementation to specification.
+
+This is a day-to-day problem, every software project struggle with it. In order to deal with these issues during the years different methods emerged. One of them is BDD which has some unique characteristics: provides a link between the business and the development. After after careful consideration BDD was selected to be implemented. Though the principals of the framework was a good start, there were questions which had to be clarified and problems to tackle in order to have a properly tailored and effective process for the effective development.
+
+The main questions were: what is the proper granularity of testing? How to create test cases, which are not redundant, however can be applied all the different channels of the product (RESTful API, web UI, mobile)? What makes a good scenario (define the grammar)? How to create preferment, data driven tests?
+
+In this paper it will be described how the tailored Gherkin grammar is defined and extended, how it is linked to the development process and how this ensures to have an effective testing focusing on the business value.
+
+In this study we will describe the way how and why BDD as a framework was selected, how was it extended to tackle the aforementioned problems. Though the focus of this paper is the Gherkin language and its extension, the development process will be described as well. This is necessary, since the evolutionary stages of the scenarios are reflects to the development process. The updated Gherkin grammar and tailored BDD process mitigate the risk of the divergence of specification and implementation, while maximize the effectiveness of the feature descriptions to make it possible to test RESTful APIs, UIs, etc through the same process. Based on empirical data this has adjunct benefits too, such as quicker catch up of new team members, shortened bug fixes.
+
+The adjusted BDD process described in this paper called by us "evolutionary BDD" or eBDD while the extended Gherkin syntax as "annotated Gherkin".
 \end{abstract}
 
 % no keywords
@@ -418,9 +428,11 @@ To have such a representation, the process, which help define the minimum set of
   \item population must be defined (the population is the list of the scenarios under and/or effected but the current development phase)
 \end{enumerate}
 
+Finding the minimum set of satisfactory requirements is necessary but not sufficient condition to cost effective testing and development.
+
 An other problem which developers face with in a general case is testing the different APIs of the system is under development. 
 
-In order to have an effective testing method, it must be ensured that all the APIs (RESTful APIs, Queues, UIs, Mobile apps) of the system is tested as well. However, the problems here are the following:
+In order to have an effective testing method, it is expected that all the system APIs (RESTful APIs, Queues, UIs, Mobile apps) are tested through the same process. The problems here are the following:
 \begin{enumerate}
     \item a
 \end{enumerate}
@@ -567,10 +579,28 @@ The authors would like to thank...
 % set second argument of \begin to the number of references
 % (used to reserve space for the reference number labels box)
 \begin{thebibliography}{1}
-\bibitem{IEEEhowto:a}
-a
-\bibitem{IEEEhowto:b}
-b
+\bibitem{swprj:ssh}
+Project Smart: \emph{The Standish Group Report} \url{https://bit.ly/1JFKOwF}
+
+\bibitem{swprj:sf}
+Sharon Florentine: \emph{IT project success rates finally improving} \url{https://bit.ly/2GvoaQG}
+
+\bibitem{bdd:tsundberg}
+Thomas Sundberg: \emph{Where should you use Behaviour-Driven Development?} \url{https://bit.ly/2SRVkQb}
+
+\bibitem{bdd:cturner}
+Chris Turner: \emph{The Best Way to Apply BDD} \url{https://bit.ly/2ByKcxO}
+
+\bibitem{bdd:lshao}
+Lingkai Shao: \emph{How To Use Gherkin And Espresso For Android Test Automation} \url{https://bit.ly/2TPjBUo}
+
+\bibitem{bdd:rruiz}
+Rafael Ruiz: \emph{BDD: User Interface Testing} \url{https://bit.ly/2BD0R3o}
+
+\bibitem{cucumber:manual_ui}
+Cucumber documentation \emph{Browser Automation}
+\url{https://bit.ly/2SOI1QJ}
+
 \bibitem{IEEEhowto:kopka}
 H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
   0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
