@@ -77,6 +77,10 @@
 % Some very useful LaTeX packages include:
 % (uncomment the ones you want to load)
 
+\usepackage[latin1]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{enumitem}
 
 % *** MISC UTILITY PACKAGES ***
 %
@@ -331,7 +335,7 @@
 % paper title
 % can use linebreaks \\ within to get better formatting as desired
 % Do not put math or special symbols in the title.
-\title{Evolutionary system specification with 'annotated Gherkin' syntax}
+\title{Evolving system specification with 'annotated Gherkin' feature definitions}
 
 
 % author names and affiliations
@@ -386,15 +390,15 @@ Email: andras.sevcsik@finastra.com}}
 \begin{abstract}
 Software projects are hard to deliver and significant part of the complexity comes from the severity of reasoning about the correctness of the product. This hardness is twofold: a) how to define the requirements and b) how to proof the compliance of implementation to specification.
 
-This is a day-to-day problem, every software project struggle with it. In order to deal with these issues during the years different methods emerged. One of them is BDD which has some unique characteristics: provides a link between the business and the development. After after careful consideration BDD was selected to be implemented. Though the principals of the framework was a good start, there were questions which had to be clarified and problems to tackle in order to have a properly tailored and effective process for the effective development.
+This is a day-to-day problem, every software project struggle with it. In order to deal with these issues during the years different methods emerged. One of them is BDD which main characteristics is to provide a direct link between the business and the development. After careful consideration it was decided that BDD will be the base of our development method. The principals of the framework was align with our goals, but there were issues to be solved.
 
-The main questions were: what is the proper granularity of testing? How to create test cases, which are not redundant, however can be applied all the different channels of the product (RESTful API, web UI, mobile)? What makes a good scenario (define the grammar)? How to create preferment, data driven tests?
+A few of them were: \textit{what is the proper granularity of testing? How to create test cases, which are not redundant, however can be applied all the different channels of the product (RESTful API, web UI, mobile)? What makes a good scenario (define the grammar)? How to create preferment, data driven tests?}
 
-In this paper it will be described how the tailored Gherkin grammar is defined and extended, how it is linked to the development process and how this ensures to have an effective testing focusing on the business value.
+In this paper it will be described how the tailored Gherkin grammar is defined and extended, how it is linked to the development process and how this ensures to have an effective testing focusing on the business value. Patterns and practices will be introduced in order to have such a testing and development framework, which answers all the questions above.
 
-In this study we will describe the way how and why BDD as a framework was selected, how was it extended to tackle the aforementioned problems. Though the focus of this paper is the Gherkin language and its extension, the development process will be described as well. This is necessary, since the evolutionary stages of the scenarios are reflects to the development process. The updated Gherkin grammar and tailored BDD process mitigate the risk of the divergence of specification and implementation, while maximize the effectiveness of the feature descriptions to make it possible to test RESTful APIs, UIs, etc through the same process. Based on empirical data this has adjunct benefits too, such as quicker catch up of new team members, shortened bug fixes.
+The focus of this paper is on the Gherkin language: how it was extended and implemented. The development process will be described roughly too, in order to put the changes into context. This context will show how the process reflects to the Gherkin language and its implementation. Based on empirical data this has adjunct benefits too, such as quicker catch up of new team members, shortened bug fixes.
 
-The adjusted BDD process described in this paper called by us "evolutionary BDD" or eBDD while the extended Gherkin syntax as "annotated Gherkin".
+The main goal of the testing process to adopt continuously to the chancing requirements in the most cost effective way. Because of the evolutionary analogy it is referred as "evolutionary BDD" while the extended Gherkin syntax as "annotated Gherkin".
 \end{abstract}
 
 % no keywords
@@ -416,26 +420,198 @@ The adjusted BDD process described in this paper called by us "evolutionary BDD"
 
 \section{Introduction}
 % no \IEEEPARstart
-A software is a model of reality. Like a map: must represent the reality with enough precision to give one the capability to find a suitable path from point A to B, but cannot describe the reality in its full depth. Cartographers are dealing with this "resolution" problem since the dawn of civilization, which gives them enough time to deal with this problem. Software developers not so lucky. They have much less time to figure out how to describe reality in a useful, but not unnecessarily complex way.
+A software is a model of the reality. Like a map: must represent the reality with enough precision to give one the capability to find a suitable path from point A to B. It cannot describe the reality in its full depth and it should not in order to elevate the most relevant information. Cartographers are dealing with the "resolution" problem since the dawn of civilization, which gives them enough time to deal with it. However, software developers not so lucky. They have had significantly less time to figure out how to describe reality in a useful, but not unnecessarily complex way.
 
-Finding the most effective way to represent reality is something evolution dealing with rather successfully. Therefore it seems reasonable to apply its methods in software specification and development, in order to find the "the minimum set of satisfactory requirements". A requirement is "satisfactory" if it compliant with the current knowledge of a system and doesn't contradict any of the existing description. A given set of requirements is "minimal" if there's no redundant definition of features.
+To find well adopted creatures in a changing environment is something evolution dealing with rather successfully. Therefore it seems justified to apply its methods in software specification and development in order to find the "the minimum set of satisfactory requirements". A requirement is "satisfactory" in this context if it compliant with the current knowledge of a system and doesn't contradict any of the existing description (if it does, it must be resolved). A given set of requirements is "minimal" if there's no redundant definition of features.
 
-To have such a representation, the process, which help define the minimum set of satisfactory requirements are the following:
+The goal was to set up a working framework, where this set of requirements will naturally manifest itself. This framework has to be capable to link the business with the development and mitigate the likelihood of misunderstanding or misinterpretation of the specification. A common language can help with this, therefore BDD - through the Gherkin language - is a perfect candidate for this role. In this model the scenarios and steps of the Gherkin language can represent the generations which are selected by their usability according to their effectiveness in the communication between different parties.
+
+\textit{The conjecture is that in such an working framework the a semi-optimal set of scenarios (and sentences) will be developed, thus this process approximate the minimal development cost of the product while maximize usefulness of the specification.}
+
+This conjecture is supported by some of the main traits of the testing process:
 \begin{enumerate}
-  \item the medium of information flow must exists. (Gherkin language and grammar in the Feature files)
-  \item the selection process and criteria must exists (meetings, where the steak holders evolve the scenarios and notions)
-  \item the iteration process must be defined (sprints, where the different scenarios are created)
-  \item population must be defined (the population is the list of the scenarios under and/or effected but the current development phase)
+    \item \textit{Minimize the size} of the specification. This is obvious, through the step definitions: if the same functions were called in the same order, the functionality is the same. On the other hand, since BDD's base is TDD, therefore only those functions are developed, which are tested at least with one scenario.
+    \item \textit{Mitigate the likelihood of contradiction} in the specification. It turns out, if there's any contradiction there must be a point when a given test can be accepted, only if an other one fails. This can be resolved through update the specification. The reason why it only mitigate and does not rule out contradiction, because there's still some room for misinterpretation of the scenario.
+    \item \textit{Provide a common understanding} between the stakeholders through the clean strict grammar and the ubiquitous language.
+    \item \textit{Data driven} tests can be implemented. The \textit{Given} part of the communication ought to be built up through function composition.
+    \item \textit{"Black box"} testing could be provided. The Gherkin language and the step definitions help focus on the business value and keep distance from the implementation itself.
 \end{enumerate}
 
-Finding the minimum set of satisfactory requirements is necessary but not sufficient condition to cost effective testing and development.
+% https://en.wikipedia.org/wiki/Domain-specific_language
+\subsection{Usage patterns}
+\subsection{Design goals}
+\subsection{Idioms}
+
+\subsection{The grammar}
+Since our test system implementation is based on BDD, we've used Gherkin language for scenario definition. In this section it is described, how its grammar is defined, with all the tailor job.
+
+The Gherkin language is declarative language, which has three main expression types: \textit{Given}, \textit{When} and \textit{Then}. These have different role therefore different grammar was defined for them. In order to understand the different role of these expressions, let's consider testing in the most abstract way. An imterpretation of abstract testing and its purpose can be seen on Figure ~\ref{fig:absSysTest}. The equivalence of this abstract model and the defined grammar described below.
+
+\begin{figure}[hbt!]
+    \caption{Abstract system testing}
+    \centering
+    \label{fig:absSysTest}
+  
+    \tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+    \tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=5em, text centered, rounded corners, minimum height=4em]
+    \tikzstyle{line} = [draw, -latex']
+    \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=2.5cm, minimum height=2em]
+    
+    % https://www.overleaf.com/learn/latex/Pgfplots_package
+    % http://www.texample.net/tikz/examples/tag/graphs/
+    % http://www.texample.net/tikz/examples/simple-flow-chart/
+    % https://www.overleaf.com/learn/latex/LaTeX_Graphics_using_TikZ:_A_Tutorial_for_Beginners_(Part_3)%E2%80%94Creating_Flowcharts
+    \begin{tikzpicture}[node distance = 2cm, auto]
+        % Place nodes
+        \node [block] (ts) {\[f\]};
+        \node [cloud, left of=ts] (in) {};
+        \node [cloud, above of=ts] (st) {State};
+        \node [cloud, right of=ts] (+) {+};
+        \node [cloud, below of=+, node distance=2cm] (exp) {Exp};
+        % Draw edges
+        \path [line,dashed] (in) -- node {IN} (ts);
+        \path [line,dashed] (ts) -- node {OUT} (+);
+        \path [line,dashed] (st) -- node {inject state} (ts);
+        \path [line] (exp) -- (+);
+        % \path [line] (decide) -| node [near start] {yes} (update);
+        % \path [line] (update) |- (identify);
+        % \path [line] (decide) -- node {no}(stop);
+    \end{tikzpicture}
+\end{figure}
+
+The blue box represents the system under test. The function \(f\) can be considered as an API method of the tested system. This is an abstract representation of a function, therefore it can represent any functionality in any channel. It can be a RESTful API or a UI. From functional testing point of view it does not differs. The idea here is that only the representation of the function, therefore the testing framework is different. We can test RESTful APIs with http calls, a web ui with Selenium, or an Android application with Selendroid - or any other tools of choice. 
+
+The abstract definition of the API which is called is 
+\begin{equation} \label{eq:apiFn}
+    f: IN \Rightarrow OUT
+\end{equation}
+
+In the every day practice, when we write a business application it is the rarest when a pure function can be tested. There always some side effect, which currently represented as the State, which must be injected. However, without limiting the generality it is reasonable assume that the given state can be created with other function of the tested system. Therefore the following holds:
+\begin{equation} \label{eq:stateAsComposition}
+    State \equiv f_{0} \circ f_{1} \circ ... \circ f_{n}
+\end{equation}
+, where \( \mathbb{F} = \{ i \in \mathbb{N} | f_{i} \} \) is the set of all methods of the tested system.
+
+Considering all the things above, now let's see how these are manifest themselves in the Gherkin language. In order to logically build up the grammar definition, the ordering of the discussion of these elements of the Gherkin language is different from the traditional. We'll start with \textit{When} and continue with \textit{Given}, \textit{Then}. The formalization of this flavour of Gherkin was rejected. Between the reasons there was to keep the flexibility of the plain Gherkin language; the lack of supporting tools and last but not least, the language should not become cumbersome for its users.
+
+The \textit{When} is the actual API under test. On Figure ~\ref{fig:absSysTest} this is represented by the blue box in the middle, whit \(f\) method. This leads us a few restrictions in regard of the grammar of it:
+\begin{enumerate}[label=w.\arabic*]
+    \item There's only one verb in the step definition, which represents the API function \(f\),
+    \item The conjunction \textit{And} is not allowed in the \textit{When} section,
+\end{enumerate}
+
+The \textit{Given} steps declares the state of the system. This is represented on the top of Figure ~\ref{fig:absSysTest}. The \textit{Given} grammar is according to the following rules:
+\begin{enumerate}[label=g.\arabic*]
+    \item The allowed verbs are the following: `to be`. In some case it is more convenient to use `have` or `exists`, but as a rule of thumb the `to be` is the most important and most common. Therefore a \textit{Given} step general form looks as the following:
+    % TODO: define properly the grammar, since the actual definition is not proper.
+    \begin{itemize}
+        \item \textit{Given \textsc{entity\(_{0} \)} exists}
+        \item \textit{Given \textsc{entity\(_{0} \)} is \textsc{value\(_{0} \)}}
+    \end{itemize}
+    The \textsc{entity\(_{0} \)} can be created by given combination of API calls. Therefore when a \textit{Given} step is declared, some of the formerly declared \textit{When} statements would be composed. In practice it can happen that the given function was not yet tested, in this case the direct system call will be applied.
+    \item The conjunction \textit{And} is allowed in the \text{Given} section,
+\end{enumerate}
+
+The \textit{Then} steps declares the assertion to the expected behaviour. Assertion of the expected result can be seen on the right side of Figure ~\ref{fig:absSysTest}. The \textit{Then} statement grammar is the following:
+\begin{enumerate}[label=t.\arabic*]
+    \item 'to be' and should are the most commonly used verb, however for convenience other verbs which has no meaning in the given context can be used too, such as 'have', 'exists',
+    \item The conjunction \textit{And} is allowed in the \text{Then} section,
+\end{enumerate}
+
+There are a few general rules, which true for all the statements. These are:
+\begin{enumerate}[label=r.\arabic*]
+    \item The steps are declarative and no denial phrase is allowed (for instance: instead of 'User "Bob" does not have right to open File A' the following should be used: 'User "Bob" can open File B'),
+    \item The steps are in present tense,
+    \item Condition cannot be defined in steps (no if statements),
+    \item \label{gen.Annttn} Each step can has a suffix in the following structure: \textit{<sentence> | <list of suffixes>}. These suffixes are called annotations, thus the scenario is annotated.
+    \item \label{gen.EntNm} Entities has names (for instance: 'User \textsc{bob} can open File \textsc{B}'),
+    \item \label{gen.SttShr}State sharing allowed only between steps withing a scenario (not between scenarios),
+    \item \label{gen.EntPrpSet}Properties for readability can be defined through Gherkin Examples, JSON files, CSV files or can be generated randomly based on the test needs.
+\end{enumerate}
+Few of the rules above worth to explain. Rule \ref{gen.EntNm} provides the capability to refer to different entities which were defined in previous steps. This is how states can be shared between steps, as it is described in the \ref{gen.SttShr}. Therefore if there's an \textsc{entity\(_{0} \)} with name \textit{\(E_{0}\)}, than in other steps, through name \textit{\(E_{0}\)} can be referred to \textsc{entity\(_{0} \)}. With this mechanism state can be shared between \textit{Given}, \textit{When}, \textit{Then} sections.
+
+Many times there are only a few important properties of a given entity which otherwise can have numerous properties. In order to keep the readability it was introduced that entities can be declared in JSON or CSV files, which helps to keep our feature files clean, without the noise of unimportant variables. This was the motivation behind introducing rule \ref{gen.EntPrpSet}; this is only for practicality purposes.
+
+\subsection{Annotation suffixes on steps}
+
+So far we've seen what are the rules to write an effective test
+As it was described in \ref{gen.Annttn} a sentence can have a suffix in the annotated Gherkin scenarios.
+There are the following suffixes distinguished:
+    \begin{itemize}
+        \item \textit{raw}: which means this line has a pure business definition. In different context this must be tested in different way.
+        \item \textit{api}
+        \item \textit{ui}
+        \item \textit{mob}
+        \item \textit{blueprint}
+    \end{itemize}
+
+Each of these suffixes can refer to a specific version of the channel it represents. So \textit{api\_v\(_{i}\)} refers to the \(i^{th}\) version of the RESTful API of the given system.
+
+\subsection{The vocabulary and its context}
+Our every day interactions - both orally and writing - are rely on the assumption that the communicating parties have the same definitions of the different notions. Though it is obviously not the case, most of the cases these vague understanding are acceptable. However, when a problem must be formalized - this is inevitable because of the programming - this is not enough any more.
+
+The vocabulary is the body of words, which defines the domain. It contains the list of difficult, unfamiliar, misunderstandable or misinterpretable words with an explanation of their meaning. Words can be referred as their common meaning and its particular meaning which is in the vocabulary. Earlier word start with lowercase latter starts with uppercase letter.
+
+Vocabulary helps to identify and define bounded contexts as well. Collision or overlapping in definitions of words are good indicators to split up the functionality of the module and define a new bounded context too.
+
+\subsection{Testing cost considerations}
+todo:
+Cost of testing in our case consists of the following: cost of creating scenarios, cost of step definition implementation, cost of running the tests. Data driven testing. All the time the state must be created from scratch. That can be costly. However, test pyramid will do lower level tests, the scenarios are only for testing the general business functionality of the system.
+On the benefits side there's the less communication cost, less errors, less catch up time for newcomers, easier hand over, faster bugfixing.
+minimal amount of code and code coverage.
+
+
+************************************************************
+
+\begin{enumerate}
+    % \item create a reference frame, where the evolution is happening
+    % \item in this world the scenarios and sentences are which should be compete for "survive"
+    % \item Theorem: in such an environment a semi-optimal (minimal) set of scenarios (and sentences) will be developed, thus this process minimize the cost while provide the maximum cover of the functionality
+    \item what code coverage means in this environment? how defensive programming should minimize its effect?
+    % \item Gherkin grammar: declarative, not imperative. The role of the Given, When, Then (State definition, action to be tested, assertion of the expected behavior)
+        % \begin{enumerate}
+        %     \item Given grammar: allowed verbs: different forms of 'to be', 'exists', 'have'. Cannot contains conditions. A given \textit{always} a composition of formerly defined verb implementations (functions).
+        %     \item When grammar: a sentence, which contains only one verb. Cannot contains conditions.
+        %     \item Then grammar: allowed verbs: different forms of 'to be', 'exists', 'have', should. 
+        % \end{enumerate}
+    \item Gherkin vocabulary:
+        \begin{enumerate}
+            \item define the notions
+            \item verb are the function, which will be called on the API, or represented is some way on the UI (or any other channel)
+        \end{enumerate}
+    \item Gherkin annotations:
+        \begin{enumerate}
+            \item why annotations are necessary
+            \item what do they represent: the extension of a step, actually it contains channel specific verbs. The annotated sentences apply only a specific channel.
+            \item how can they be implemented
+        \end{enumerate}
+    \item the process of writing scenarios:
+        \begin{enumerate}
+            \item write down the main functionality of a service in one scenario. If there's any state in the 'Given' section which cannot be created with any of the formerly defined verbs (in the 'When' statements) then create at least one new scenario, with a newly defined verb, which is tested there. This is the process of 'unfolding the scenarios'. At the end of this process the 'raw gherkin feature files' will exists.
+            \item this process will ensure the minimum number of functions and the "shortest cut" to the expected functionality.
+            \item extend 'raw gherkins' as required
+        \end{enumerate}
+    \item how to reason about the code with the function composition? verb 	\Rightarrow fi \Rightarrow f0 \circ f1 \circ f2 \circ ... \circ fn
+    \item data driven testing
+    \item other usability of the extensions: system blueprints / configurations.
+    \item cons: changes in the language cause lot's of update; hard to get used to the declarative style; complexity of expressing time related issues (declarative language knows only the now... Given - past; When - now, but it cannot be define order in the Given section - at least on the language level); ???
+\end{enumerate}
+
+
+*********
+
+The following traits are represents the frame of such a system:
+\begin{enumerate}
+  \item existence of "medium" / channel where information flows between business and developers. (Feature files, Ghekrin grammar, defined vocab, "population" of steps and scenarios)
+  \item existence of a process which optimize the information in the channel. (meetings, where the steak holders evolve the scenarios and notions)
+  \item 
+\end{enumerate}
+
+The 
 
 An other problem which developers face with in a general case is testing the different APIs of the system is under development. 
 
 In order to have an effective testing method, it is expected that all the system APIs (RESTful APIs, Queues, UIs, Mobile apps) are tested through the same process. The problems here are the following:
-\begin{enumerate}
-    \item a
-\end{enumerate}
 -- need find a method to work on all the channels
 % You must have at least 2 lines in the paragraph with the drop letter
 % (should never be an issue)
@@ -465,15 +641,15 @@ Subsubsection text here.
 % option should be used if it is desired that the figures are to be
 % displayed while in draft mode.
 %
-%\begin{figure}[!t]
-%\centering
-%\includegraphics[width=2.5in]{myfigure}
+% \begin{figure}[!t]
+% \centering
+% \includegraphics[width=2.5in]{myfigure}
 % where an .eps filename suffix will be assumed under latex, 
 % and a .pdf suffix will be assumed for pdflatex; or what has been declared
 % via \DeclareGraphicsExtensions.
-%\caption{Simulation Results.}
-%\label{fig_sim}
-%\end{figure}
+% \caption{Simulation Results.}
+% \label{fig_sim}
+% \end{figure}
 
 % Note that IEEE typically puts floats only at the top, even when this
 % results in a large percentage of a column being occupied by floats.
@@ -600,6 +776,25 @@ Rafael Ruiz: \emph{BDD: User Interface Testing} \url{https://bit.ly/2BD0R3o}
 \bibitem{cucumber:manual_ui}
 Cucumber documentation \emph{Browser Automation}
 \url{https://bit.ly/2SOI1QJ}
+
+\bibitem{bdd:ea}
+Enrique Amodeo: \emph{Learning Behavior-driven Development with JavaScript} Birmingham B3 2PB, UK.: Packt Publishing, 2015.
+
+\bibitem{bdd:jfs}
+John Ferguson Smart: \emph{BDD in Action} Shelter Island, NY 11964: Manning Publications Co., 2015.
+
+\bibitem{bdd:ismwah}
+Ian Dees, Matt Wynne, Aslak Hellesøy: \emph{Cucumber Recipes} The Pragmatic Programmers, LLC, 2013.
+
+\bibitem{bdd:srmwah}
+Seb Rose, Matt Wynne, Aslak Hellesøy: \emph{The Cucumber for Java Book} The Pragmatic Programmers, LLC., 2015.
+
+\bibitem{bdd:}
+David Chelimsky with Dave Astels, Zach Dennis, Aslak Hellesøy, Bryan Helmkamp, Dan North: \emph{The RSpec Book} Behaviour-Driven Development with RSpec, Cucumber, and Friends The Pragmatic Programmers, LLC., 2010
+
+\bibitem{bdd:}
+Christian Colombo, Mark Micallef, Mark Scerri: \emph{VerifyingWeb Applications: From Business Level
+Specifications to Automated Model-Based Testing} PEST Research Lab, Department of Computer Science, University of Malta, Malta \url{fchristian.colombo / mark.micallef / msce0013g@um.edu.mt}
 
 \bibitem{IEEEhowto:kopka}
 H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
