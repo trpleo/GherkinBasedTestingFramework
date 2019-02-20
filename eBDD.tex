@@ -425,6 +425,35 @@ The main goal of the testing process to adopt continuously to the chancing requi
     \item conclusion and todos - \textit{Conclusion}
 \end{itemize}
 
+\section{Introduction}
+\subsection{Problem definition}
+What is the problem to solve?
+
+how to write good tests?, how to link it to the business requirements? => test pyramid => "minimum set of satisfactory requirements" => how??? => evolutionary process;
+
+how to test a system in a "good enough" manner? vs how to test a system with different channels, but without the complication of replication of scenarios => realise there's a hierarchy of the test cases => annotated gherkin
+\subsection{Solution summary}
+see the solutions above
+
+\section{Design considerations}
+% https://en.wikipedia.org/wiki/Domain-specific_language
+\subsection{Usage patterns}
+\subsection{Design goals}
+\subsection{Idioms}
+
+\section{Annotated Gherkins}
+\subsection{Grammar}
+\subsection{Suffixes as annotations}
+\subsection{Vocabulary and Contexts}
+
+\section{Implementation}
+\subsection{Architecture for testing}
+test as 3rd party; use only interfaces: this can be ui or RESTful API or... whatever.
+\subsection{Testing framework - World}
+sharing state between only steps => idea from functional programming: State... introduction of World => BeginScenario:instanciate World / EndScenario: free World => fluent api
+\subsection{Channel testing}
+
+\section{Conclusion}
 
 
 \section{Introduction}
@@ -445,11 +474,6 @@ This conjecture is supported by some of the main traits of the testing process:
     \item \textit{Data driven} tests can be implemented. The \textit{Given} part of the communication ought to be built up through function composition.
     \item \textit{"Black box"} testing could be provided. The Gherkin language and the step definitions help focus on the business value and keep distance from the implementation itself.
 \end{enumerate}
-
-% https://en.wikipedia.org/wiki/Domain-specific_language
-\subsection{Usage patterns}
-\subsection{Design goals}
-\subsection{Idioms}
 
 \subsection{The grammar}
 Since our test system implementation is based on BDD, we've used Gherkin language for scenario definition. In this section it is described, how its grammar is defined, with all the tailor job.
