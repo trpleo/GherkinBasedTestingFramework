@@ -77,8 +77,8 @@
 % Some very useful LaTeX packages include:
 % (uncomment the ones you want to load)
 
-% \usepackage[utf8]{inputenc}
-\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+% \usepackage[latin1]{inputenc}
 \usepackage{tikz}
 \usetikzlibrary{shapes,arrows}
 \usepackage{enumitem}
@@ -88,6 +88,38 @@
 \newcommand{\N}{\mathbb N}
 \newcommand{\Q}{\mathbb Q}
 \usepackage{hyperref}
+\usepackage{cite}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage[T1]{fontenc}
+\usepackage{beramono}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{myScalastyle}{
+  frame=tb,
+  language=scala,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  frame=single,
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+}
+
 
 % *** MISC UTILITY PACKAGES ***
 %
@@ -440,17 +472,33 @@ The main goal of the testing process to adopt continuously to the chancing requi
 
 A software is a model of the reality. Like a map: must represent the reality with enough precision to give one the capability to find a suitable path from point A to B. It cannot describe the reality in its full depth and it should not in order to elevate the most relevant information. Cartographers are dealing with the "resolution" problem since the dawn of civilization, which gives them enough time to deal with it. However, software developers not so lucky. They have had significantly less time to figure out how to describe reality in a useful, but not unnecessarily complex way.
 
-Disregard of the development process, there's only one true specification of a software: \textit{its tests}. Therefore it is justified to specify the software through its tests from the beginning, and makes it the main communication channel between the business representatives and developers. Mike Cohn's test pyramid
+Disregard of the development process, there's only one true specification of a software: \textit{its tests}. Therefore it is justified to specify the software through its tests from the beginning, and makes it the main communication channel between the business representatives and developers. BDD with its Gherkin language is a good fit for the job.
 
 % --- how to write good tests?, how to link it to the business requirements? => test pyramid => "minimum set of satisfactory requirements" => how??? => evolutionary process; ---
 
+However, when a testing framework is about to put into practice, many practical "low-level" questions are raised. Between those are the following:
+\begin{itemize}
+    \item What makes a good test?
+    \item What is the proper granularity of a test?
+    \item How can it be applied it to different "layers" of the application?
+    \item How many scenarios are enough?
+\end{itemize}
+
+To create a system, which reflects on these questions and issues, Mike Cohn's test pyramid can be handy. Though this approach is not perfect either. Some argue that the test pyramid's layers are not ideally split and its concepts are not properly defined. \cite{tpy.ek.leantesting, tpy.jc.tpyml} However, it can be accepted as common ground the more costly a given type of test is, the less should be applied. On the other hand with framework like react, angular and many others the cost of testing the UI is decreased to unit testing level - the original test boundaries are blurred.
+
 % --- how to test a system in a "good enough" manner? vs how to test a system with different channels, but without the complication of replication of scenarios => realise there's a hierarchy of the test cases => annotated gherkin ---
 
-%To find well adopted creatures in a changing environment is something evolution dealing with rather successfully. Therefore it seems justified to apply its methods in software specification and development in order to find the "the minimum set of satisfactory requirements". A requirement is "satisfactory" in this context if it compliant with the current knowledge of a system and doesn't contradict any of the existing description (if it does, it must be resolved). A given set of requirements is "minimal" if there's no redundant definition of features.
+Though we should automate our testing, automated tests were considered expensive to write and slow to deliver. Often the specification is finished after a feature had been developed and delivered.
 
-%The goal was to set up a working framework, where this set of requirements will naturally manifest itself. This framework has to be capable to link the business with the development and mitigate the likelihood of misunderstanding or misinterpretation of the specification. A common language can help with this, therefore BDD - through the Gherkin language - is a perfect candidate for this role. In this model the scenarios and steps of the Gherkin language can represent the generations which are selected by their usability according to their effectiveness in the communication between different parties.
+At the same time the cost of the testing not depends only on the execution time. It additionally sums up from the redundancy of the tests and the maintenance cost of them too. To minimize of the cost of these components not trivial. Testing must be automated and have to find a proper balance between a "perfectly tested system" and the "release without testing".
 
-% \textit{The conjecture is that in such an working framework the a semi-optimal set of scenarios (and sentences) will be developed, thus this process approximate the minimal development cost of the product while maximize usefulness of the specification.}
+If one find itself in a situation where some system must be optimized in a constantly changing environment, were over time the goal can be change as well, evolutionary optimization is always a good candidate. Therefore apply evolutionary methods in software specification and development in order to find the "the minimum set of satisfactory requirements" is rather justified. A requirement is "satisfactory" in this context if it compliant with the current knowledge of a system and doesn't contradict any of the existing description (if it does, it must be resolved). A given set of requirements is "minimal" if there's no redundant definition of features.
+
+The goal was to set up a working framework, where the minimum set of requirements will naturally manifest itself and automation is natural and well supported. This framework has to be capable to link the business with the development and mitigate the likelihood of misunderstanding or misinterpretation of the specification. As before, BDD - through the Gherkin language - is a perfect candidate for this role. Scenarios and steps of the Gherkin language can represent the generations which are selected by their usability according to their effectiveness in the communication between different parties (the Three Amigos if we stick to the BDD notions).
+
+\textit{The conjecture is that in such a working environment, where <process> a minimum set of semi-optimal ("satisfactory") set of scenarios will be defined. Therefore the development cost of tests are minimized, while the benefits of the test cases are maximized.} Therefore the benefits of the test cases are (locally) optimal at a given cost. Please note that this does not means full functional testing, neither eliminate fully the cost of "misunderstanding" between the different roles. It only articulate that fixing the cost, this method can provide a (local) optimum of the value of the testing. 
+
+\textit{The conjecture is that in such a working framework the a semi-optimal set of scenarios (and sentences) will be developed, thus this process approximate the minimal development cost of the product while maximize usefulness of the specification.}
 
 % This conjecture is supported by some of the main traits of the testing process:
 % \begin{enumerate}
@@ -481,6 +529,34 @@ test as 3rd party; use only interfaces: this can be ui or RESTful API or... what
 \subsection{Testing framework - World}
 sharing state between only steps => idea from functional programming: State... introduction of World => BeginScenario:instanciate World / EndScenario: free World => fluent api
 \subsection{Channel testing}
+
+\begin{algorithm}
+    \caption{Euclid’s algorithm}\label{euclid}
+    \begin{algorithmic}[1]
+        \Procedure{Euclid}{$a,b$}\Comment{The g.c.d. of a and b}
+        \State $r\gets a\bmod b$
+        \While{$r\not=0$}\Comment{We have the answer if r is 0}
+            \State $a\gets b$
+            \State $b\gets r$
+            \State $r\gets a\bmod b$
+        \EndWhile\label{euclidendwhile}
+        \State \textbf{return} $b$\Comment{The gcd is b}
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{lstlisting}[style=myScalastyle]
+object Test {
+   def main(args: Array[String]) {
+      var a = 0;
+      // for loop execution with a range
+      for( a <- 1 to 10){
+         println( "Value of a: " + a );
+      }
+   }
+}
+\end{lstlisting}
+
 
 \section{Conclusion}
 
@@ -809,6 +885,12 @@ Sharon Florentine: \emph{IT project success rates finally improving} \url{https:
 
 \bibitem{tpy.hv}
 Ham Vocke: \emph{The Practical Test Pyramid} \url{https://martinfowler.com/articles/practical-test-pyramid.html}
+
+\bibitem{tpy.jc.tpyml}
+Joe Colantonio: \emph{Why the Testing Pyramid is Misleading} \url{https://www.joecolantonio.com/testing-pyramid/}
+
+\bibitem{tpy.ek.leantesting}
+Eugen Kiss: \emph{Lean Testing or Why Unit Tests are Worse than You Think} \url{https://blog.usejournal.com/lean-testing-or-why-unit-tests-are-worse-than-you-think-b6500139a009}
 
 \bibitem{bdd.tsundberg}
 Thomas Sundberg: \emph{Where should you use Behaviour-Driven Development?} \url{https://bit.ly/2SRVkQb}
