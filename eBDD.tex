@@ -427,22 +427,26 @@ Email: andras.sevcsik@finastra.com}}
 % As a general rule, do not put math, special symbols or citations
 % in the abstract
 \begin{abstract}
-Software projects are hard to deliver and significant part of the complexity comes from the severity of reasoning about the correctness of the product. This hardness is twofold: a) how to define the requirements and b) how to proof the compliance of implementation to specification.
+Software projects are hard to deliver and significant part of the complexity comes from the severity of reasoning about the correctness of the product. This hardness is twofold: \textit{a) how to define the requirements} and \textit{b) how to proof the compliance of implementation to specification}.
 
-This is a day-to-day problem, every software project struggle with it. In order to deal with these issues during the years different methods emerged. One of them is BDD which main characteristics is to provide a direct link between the business and the development. After careful consideration it was decided that BDD will be the base of our development method. The principals of the framework was align with our goals, but there were issues to be solved.
+In this paper a solution with its implementation is described, which is based on a popular approach to deal with these problems: \textit{Behavior Driven Development (BDD)}.
 
-A few of them were: \textit{what is the proper granularity of testing? How to create test cases, which are not redundant, however can be applied all the different channels of the product (RESTful API, web UI, mobile)? What makes a good scenario (define the grammar)? How to create preferment, data driven tests?}
+In this paper it will be described how the Gherkin grammar is extended and defined, how it is linked to the development process.
 
-In this paper it will be described how the tailored Gherkin grammar is defined and extended, how it is linked to the development process and how this ensures to have an effective testing focusing on the business value. Patterns and practices will be introduced in order to have such a testing and development framework, which answers all the questions above.
-
-The focus of this paper is on the Gherkin language: how it was extended and implemented. The development process will be described roughly too, in order to put the changes into context. This context will show how the process reflects to the Gherkin language and its implementation. Based on empirical data this has adjunct benefits too, such as quicker catch up of new team members, shortened bug fixes.
+Furthermore it is described how the specification process is defined and explained why and how it is cost effective while focusing on the business value.
 
 The main goal of the testing process to adopt continuously to the chancing requirements in the most cost effective way. Because of the evolutionary analogy it is referred as "evolutionary BDD" while the extended Gherkin syntax as "annotated Gherkin".
+
+%This is a day-to-day problem, every software project struggle with it. In order to deal with these issues during the years different methods emerged. One of them is BDD which main characteristics is to provide a direct link between the business and the development. After careful consideration it was decided that BDD will be the base of our development method. The principals of the framework was align with our goals, but there were issues to be solved.
+
+%A few of them were: \textit{what is the proper granularity of testing? How to create test cases, which are not redundant, however can be applied all the different channels of the product (RESTful API, web UI, mobile)? What makes a good scenario (define the grammar)? How to create preferment, data driven tests?}
+
+%The focus of this paper is on the Gherkin language: how it was extended and implemented. The development process will be described roughly too, in order to put the changes into context. This context will show how the process reflects to the Gherkin language and its implementation. Based on empirical data this has adjunct benefits too, such as quicker catch up of new team members, shortened bug fixes.
+
 \end{abstract}
 
 % no keywords
-
-
+\keywords{evolutionary process; BDD; software testing; Gherkin; Annotated Gherkin}
 
 
 % For peer review papers, you can put extra information on the cover
