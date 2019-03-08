@@ -1,0 +1,52 @@
+# dist: trusty
+sudo: false
+matrix:
+  include:
+    # - language: java
+    #   jdk: oraclejdk8
+    #   before_script:
+    #     - cd server
+    #   script:
+    #     - gradle check --info
+    #     - gradle jacocoTestReport
+    #   before_cache:
+    #     - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+    #     - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+    #   cache:
+    #     directories:
+    #       - $HOME/.gradle/caches/
+    #       - $HOME/.gradle/wrapper/
+    #   after_success:
+    #     bash <(curl -s https://codecov.io/bash) -cF server
+    - language: scala
+      scala: 2.12.8
+      env: TEST_SCRIPTED=0
+      jdk: oraclejdk8
+      before_cache:
+        - find $HOME/.ivy2 -name "ivydata-*.properties" -delete
+        - find $HOME/.sbt -name "*.lock" -delete
+      cache:
+        directories:
+          - $HOME/.ivy2/cache
+          - $HOME/.sbt/boot/
+      before_script:
+        - cd scala
+      script:
+        - sbt ++$TRAVIS_SCALA_VERSION reload compile test:compile
+        - sbt ++$TRAVIS_SCALA_VERSION clean coverage test coverageReport
+        - "if [[ $TEST_SCRIPTED = 1 ]]; then sbt tests/scripted; fi"
+      after_success:
+         bash <(curl -s https://codecov.io/bash) -cF ebddscala
+      branches:
+        only:
+          - feature/eBDD-wp
+
+notifications:
+  email:
+    - istvan.l.papp@gmail.com
+  # webhooks:
+  #   urls:
+  #     - https://webhooks.gitter.im/
+  on_success: change  # options: [always|never|change] default: always
+  on_failure: always  # options: [always|never|change] default: always
+  on_start: false     # default: false

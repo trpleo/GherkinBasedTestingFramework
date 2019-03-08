@@ -9,3 +9,5 @@ addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "5.2.4")
 addSbtPlugin("com.waioeka.sbt" % "cucumber-plugin" % "0.1.7")
 
 addSbtPlugin("org.scalariform" % "sbt-scalariform" % "1.8.2")
+
+addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.5.1")
