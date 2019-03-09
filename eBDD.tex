@@ -1,0 +1,944 @@
+
+%% bare_conf.tex
+%% V1.4
+%% 2012/12/27
+%% by Michael Shell
+%% See:
+%% http://www.michaelshell.org/
+%% for current contact information.
+%%
+%% This is a skeleton file demonstrating the use of IEEEtran.cls
+%% (requires IEEEtran.cls version 1.8 or later) with an IEEE conference paper.
+%%
+%% Support sites:
+%% http://www.michaelshell.org/tex/ieeetran/
+%% http://www.ctan.org/tex-archive/macros/latex/contrib/IEEEtran/
+%% http://www.ieee.org/
+
+%%*************************************************************************
+%% Legal Notice:
+%% This code is offered as-is without any warranty either expressed or
+%% implied; without even the implied warranty of MERCHANTABILITY or
+%% FITNESS FOR A PARTICULAR PURPOSE! 
+%% User assumes all risk.
+%% In no event shall IEEE or any contributor to this code be liable for
+%% any damages or losses, including, but not limited to, incidental,
+%% consequential, or any other damages, resulting from the use or misuse
+%% of any information contained here.
+%%
+%% All comments are the opinions of their respective authors and are not
+%% necessarily endorsed by the IEEE.
+%%
+%% This work is distributed under the LaTeX Project Public License (LPPL)
+%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
+%% distributed and modified. A copy of the LPPL, version 1.3, is included
+%% in the base LaTeX documentation of all distributions of LaTeX released
+%% 2003/12/01 or later.
+%% Retain all contribution notices and credits.
+%% ** Modified files should be clearly indicated as such, including  **
+%% ** renaming them and changing author support contact information. **
+%%
+%% File list of work: IEEEtran.cls, IEEEtran_HOWTO.pdf, bare_adv.tex,
+%%                    bare_conf.tex, bare_jrnl.tex, bare_jrnl_compsoc.tex,
+%%                    bare_jrnl_transmag.tex
+%%*************************************************************************
+
+% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
+% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
+% *** with production work. IEEE's font choices can trigger bugs that do  ***
+% *** not appear when using other class files.                            ***
+% The testflow support page is at:
+% http://www.michaelshell.org/tex/testflow/
+
+
+
+% Note that the a4paper option is mainly intended so that authors in
+% countries using A4 can easily print to A4 and see how their papers will
+% look in print - the typesetting of the document will not typically be
+% affected with changes in paper size (but the bottom and side margins will).
+% Use the testflow package mentioned above to verify correct handling of
+% both paper sizes by the user's LaTeX system.
+%
+% Also note that the "draftcls" or "draftclsnofoot", not "draft", option
+% should be used if it is desired that the figures are to be displayed in
+% draft mode.
+%
+\documentclass[conference]{IEEEtran}
+% Add the compsoc option for Computer Society conferences.
+%
+% If IEEEtran.cls has not been installed into the LaTeX system files,
+% manually specify the path to it like:
+% \documentclass[conference]{../sty/IEEEtran}
+
+
+
+
+
+% Some very useful LaTeX packages include:
+% (uncomment the ones you want to load)
+
+\usepackage[utf8]{inputenc}
+% \usepackage[latin1]{inputenc}
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows}
+\usepackage{enumitem}
+\usepackage{amssymb}
+\usepackage{lmodern}
+\usepackage{mathtools, nccmath}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Q}{\mathbb Q}
+\usepackage{hyperref}
+\usepackage{cite}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+
+\usepackage[T1]{fontenc}
+\usepackage{beramono}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstdefinestyle{myScalastyle}{
+  frame=tb,
+  language=scala,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  frame=single,
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3,
+}
+
+
+% *** MISC UTILITY PACKAGES ***
+%
+%\usepackage{ifpdf}
+% Heiko Oberdiek's ifpdf.sty is very useful if you need conditional
+% compilation based on whether the output is pdf or dvi.
+% usage:
+% \ifpdf
+%   % pdf code
+% \else
+%   % dvi code
+% \fi
+% The latest version of ifpdf.sty can be obtained from:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/oberdiek/
+% Also, note that IEEEtran.cls V1.7 and later provides a builtin
+% \ifCLASSINFOpdf conditional that works the same way.
+% When switching from latex to pdflatex and vice-versa, the compiler may
+% have to be run twice to clear warning/error messages.
+
+
+
+
+
+
+% *** CITATION PACKAGES ***
+%
+%\usepackage{cite}
+% cite.sty was written by Donald Arseneau
+% V1.6 and later of IEEEtran pre-defines the format of the cite.sty package
+% \cite{} output to follow that of IEEE. Loading the cite package will
+% result in citation numbers being automatically sorted and properly
+% "compressed/ranged". e.g., [1], [9], [2], [7], [5], [6] without using
+% cite.sty will become [1], [2], [5]--[7], [9] using cite.sty. cite.sty's
+% \cite will automatically add leading space, if needed. Use cite.sty's
+% noadjust option (cite.sty V3.8 and later) if you want to turn this off
+% such as if a citation ever needs to be enclosed in parenthesis.
+% cite.sty is already installed on most LaTeX systems. Be sure and use
+% version 4.0 (2003-05-27) and later if using hyperref.sty. cite.sty does
+% not currently provide for hyperlinked citations.
+% The latest version can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/cite/
+% The documentation is contained in the cite.sty file itself.
+
+
+
+
+
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+  % \usepackage[pdftex]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../pdf/}{../jpeg/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
+\else
+  % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
+  % will default to the driver specified in the system graphics.cfg if no
+  % driver is specified.
+  % \usepackage[dvips]{graphicx}
+  % declare the path(s) where your graphic files are
+  % \graphicspath{{../eps/}}
+  % and their extensions so you won't have to specify these with
+  % every instance of \includegraphics
+  % \DeclareGraphicsExtensions{.eps}
+\fi
+% graphicx was written by David Carlisle and Sebastian Rahtz. It is
+% required if you want graphics, photos, etc. graphicx.sty is already
+% installed on most LaTeX systems. The latest version and documentation
+% can be obtained at: 
+% http://www.ctan.org/tex-archive/macros/latex/required/graphics/
+% Another good source of documentation is "Using Imported Graphics in
+% LaTeX2e" by Keith Reckdahl which can be found at:
+% http://www.ctan.org/tex-archive/info/epslatex/
+%
+% latex, and pdflatex in dvi mode, support graphics in encapsulated
+% postscript (.eps) format. pdflatex in pdf mode supports graphics
+% in .pdf, .jpeg, .png and .mps (metapost) formats. Users should ensure
+% that all non-photo figures use a vector format (.eps, .pdf, .mps) and
+% not a bitmapped formats (.jpeg, .png). IEEE frowns on bitmapped formats
+% which can result in "jaggedy"/blurry rendering of lines and letters as
+% well as large increases in file sizes.
+%
+% You can find documentation about the pdfTeX application at:
+% http://www.tug.org/applications/pdftex
+
+
+
+
+
+% *** MATH PACKAGES ***
+%
+%\usepackage[cmex10]{amsmath}
+% A popular package from the American Mathematical Society that provides
+% many useful and powerful commands for dealing with mathematics. If using
+% it, be sure to load this package with the cmex10 option to ensure that
+% only type 1 fonts will utilized at all point sizes. Without this option,
+% it is possible that some math symbols, particularly those within
+% footnotes, will be rendered in bitmap form which will result in a
+% document that can not be IEEE Xplore compliant!
+%
+% Also, note that the amsmath package sets \interdisplaylinepenalty to 10000
+% thus preventing page breaks from occurring within multiline equations. Use:
+%\interdisplaylinepenalty=2500
+% after loading amsmath to restore such page breaks as IEEEtran.cls normally
+% does. amsmath.sty is already installed on most LaTeX systems. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/amslatex/math/
+
+
+
+
+
+% *** SPECIALIZED LIST PACKAGES ***
+%
+%\usepackage{algorithmic}
+% algorithmic.sty was written by Peter Williams and Rogerio Brito.
+% This package provides an algorithmic environment fo describing algorithms.
+% You can use the algorithmic environment in-text or within a figure
+% environment to provide for a floating algorithm. Do NOT use the algorithm
+% floating environment provided by algorithm.sty (by the same authors) or
+% algorithm2e.sty (by Christophe Fiorio) as IEEE does not use dedicated
+% algorithm float types and packages that provide these will not provide
+% correct IEEE style captions. The latest version and documentation of
+% algorithmic.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithms/
+% There is also a support site at:
+% http://algorithms.berlios.de/index.html
+% Also of interest may be the (relatively newer and more customizable)
+% algorithmicx.sty package by Szasz Janos:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/algorithmicx/
+
+
+
+
+% *** ALIGNMENT PACKAGES ***
+%
+%\usepackage{array}
+% Frank Mittelbach's and David Carlisle's array.sty patches and improves
+% the standard LaTeX2e array and tabular environments to provide better
+% appearance and additional user controls. As the default LaTeX2e table
+% generation code is lacking to the point of almost being broken with
+% respect to the quality of the end results, all users are strongly
+% advised to use an enhanced (at the very least that provided by array.sty)
+% set of table tools. array.sty is already installed on most systems. The
+% latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/required/tools/
+
+
+% IEEEtran contains the IEEEeqnarray family of commands that can be used to
+% generate multiline equations as well as matrices, tables, etc., of high
+% quality.
+
+
+
+
+% *** SUBFIGURE PACKAGES ***
+%\ifCLASSOPTIONcompsoc
+%  \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+%\else
+%  \usepackage[caption=false,font=footnotesize]{subfig}
+%\fi
+% subfig.sty, written by Steven Douglas Cochran, is the modern replacement
+% for subfigure.sty, the latter of which is no longer maintained and is
+% incompatible with some LaTeX packages including fixltx2e. However,
+% subfig.sty requires and automatically loads Axel Sommerfeldt's caption.sty
+% which will override IEEEtran.cls' handling of captions and this will result
+% in non-IEEE style figure/table captions. To prevent this problem, be sure
+% and invoke subfig.sty's "caption=false" package option (available since
+% subfig.sty version 1.3, 2005/06/28) as this is will preserve IEEEtran.cls
+% handling of captions.
+% Note that the Computer Society format requires a larger sans serif font
+% than the serif footnote size font used in traditional IEEE formatting
+% and thus the need to invoke different subfig.sty package options depending
+% on whether compsoc mode has been enabled.
+%
+% The latest version and documentation of subfig.sty can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
+
+
+
+
+% *** FLOAT PACKAGES ***
+%
+%\usepackage{fixltx2e}
+% fixltx2e, the successor to the earlier fix2col.sty, was written by
+% Frank Mittelbach and David Carlisle. This package corrects a few problems
+% in the LaTeX2e kernel, the most notable of which is that in current
+% LaTeX2e releases, the ordering of single and double column floats is not
+% guaranteed to be preserved. Thus, an unpatched LaTeX2e can allow a
+% single column figure to be placed prior to an earlier double column
+% figure. The latest version and documentation can be found at:
+% http://www.ctan.org/tex-archive/macros/latex/base/
+
+
+%\usepackage{stfloats}
+% stfloats.sty was written by Sigitas Tolusis. This package gives LaTeX2e
+% the ability to do double column floats at the bottom of the page as well
+% as the top. (e.g., "\begin{figure*}[!b]" is not normally possible in
+% LaTeX2e). It also provides a command:
+%\fnbelowfloat
+% to enable the placement of footnotes below bottom floats (the standard
+% LaTeX2e kernel puts them above bottom floats). This is an invasive package
+% which rewrites many portions of the LaTeX2e float routines. It may not work
+% with other packages that modify the LaTeX2e float routines. The latest
+% version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/sttools/
+% Do not use the stfloats baselinefloat ability as IEEE does not allow
+% \baselineskip to stretch. Authors submitting work to the IEEE should note
+% that IEEE rarely uses double column equations and that authors should try
+% to avoid such use. Do not be tempted to use the cuted.sty or midfloat.sty
+% packages (also by Sigitas Tolusis) as IEEE does not format its papers in
+% such ways.
+% Do not attempt to use stfloats with fixltx2e as they are incompatible.
+% Instead, use Morten Hogholm'a dblfloatfix which combines the features
+% of both fixltx2e and stfloats:
+%
+% \usepackage{dblfloatfix}
+% The latest version can be found at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/dblfloatfix/
+
+
+
+
+% *** PDF, URL AND HYPERLINK PACKAGES ***
+%
+%\usepackage{url}
+% url.sty was written by Donald Arseneau. It provides better support for
+% handling and breaking URLs. url.sty is already installed on most LaTeX
+% systems. The latest version and documentation can be obtained at:
+% http://www.ctan.org/tex-archive/macros/latex/contrib/url/
+% Basically, \url{my_url_here}.
+
+
+
+
+% *** Do not adjust lengths that control margins, column widths, etc. ***
+% *** Do not use packages that alter fonts (such as pslatex).         ***
+% There should be no need to do such things with IEEEtran.cls V1.6 and later.
+% (Unless specifically asked to do so by the journal or conference you plan
+% to submit to, of course. )
+
+
+% correct bad hyphenation here
+\hyphenation{}
+
+
+\begin{document}
+%
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+% Do not put math or special symbols in the title.
+\title{Evolving system specification with 'annotated Gherkin' feature definitions}
+
+
+% author names and affiliations
+% use a multiple column layout for up to three different
+% affiliations
+\author{\IEEEauthorblockN{Istvan, Papp}
+\IEEEauthorblockA{Finastra\\
+Budapest, Hungary\\
+Email: istvan.papp@finastra.com}
+\and
+\IEEEauthorblockN{Andras, Sevcsik-Zajacz}
+\IEEEauthorblockA{Finastra\\
+Budapest, Hungary\\
+Email: andras.sevcsik@finastra.com}}
+
+% conference papers do not typically use \thanks and this command
+% is locked out in conference mode. If really needed, such as for
+% the acknowledgment of grants, issue a \IEEEoverridecommandlockouts
+% after \documentclass
+
+% for over three affiliations, or if they all won't fit within the width
+% of the page, use this alternative format:
+% 
+%\author{\IEEEauthorblockN{Michael Shell\IEEEauthorrefmark{1},
+%Homer Simpson\IEEEauthorrefmark{2},
+%James Kirk\IEEEauthorrefmark{3}, 
+%Montgomery Scott\IEEEauthorrefmark{3} and
+%Eldon Tyrell\IEEEauthorrefmark{4}}
+%\IEEEauthorblockA{\IEEEauthorrefmark{1}School of Electrical and Computer Engineering\\
+%Georgia Institute of Technology,
+%Atlanta, Georgia 30332--0250\\ Email: see http://www.michaelshell.org/contact.html}
+%\IEEEauthorblockA{\IEEEauthorrefmark{2}Twentieth Century Fox, Springfield, USA\\
+%Email: homer@thesimpsons.com}
+%\IEEEauthorblockA{\IEEEauthorrefmark{3}Starfleet Academy, San Francisco, California 96678-2391\\
+%Telephone: (800) 555--1212, Fax: (888) 555--1212}
+%\IEEEauthorblockA{\IEEEauthorrefmark{4}Tyrell Inc., 123 Replicant Street, Los Angeles, California 90210--4321}}
+
+
+
+
+% use for special paper notices
+%\IEEEspecialpapernotice{(Invited Paper)}
+
+
+
+
+% make the title area
+\maketitle
+
+% As a general rule, do not put math, special symbols or citations
+% in the abstract
+\begin{abstract}
+Software projects are hard to deliver and significant part of the complexity comes from the severity of reasoning about the correctness of the product. This hardness is twofold: \textit{a) how to define the requirements} and \textit{b) how to proof the compliance of implementation to specification}.
+
+In this paper a solution with its implementation is described, which is based on a popular approach to deal with these problems: \textit{Behavior Driven Development (BDD)}.
+
+In this paper it will be described how the Gherkin grammar is extended and defined, how it is linked to the development process.
+
+Furthermore it is described how the specification process is defined and explained why and how it is cost effective while focusing on the business value.
+
+The main goal of the testing process to adopt continuously to the chancing requirements in the most cost effective way. Because of the evolutionary analogy it is referred as "evolutionary BDD" while the extended Gherkin syntax as "annotated Gherkin".
+
+%This is a day-to-day problem, every software project struggle with it. In order to deal with these issues during the years different methods emerged. One of them is BDD which main characteristics is to provide a direct link between the business and the development. After careful consideration it was decided that BDD will be the base of our development method. The principals of the framework was align with our goals, but there were issues to be solved.
+
+%A few of them were: \textit{what is the proper granularity of testing? How to create test cases, which are not redundant, however can be applied all the different channels of the product (RESTful API, web UI, mobile)? What makes a good scenario (define the grammar)? How to create preferment, data driven tests?}
+
+%The focus of this paper is on the Gherkin language: how it was extended and implemented. The development process will be described roughly too, in order to put the changes into context. This context will show how the process reflects to the Gherkin language and its implementation. Based on empirical data this has adjunct benefits too, such as quicker catch up of new team members, shortened bug fixes.
+
+\end{abstract}
+
+% no keywords
+\keywords{evolutionary process; BDD; software testing; Gherkin; Annotated Gherkin}
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+\textbf{\textit{TODO:}}
+\begin{itemize}
+    \item problem definition - \textit{Abstract, Introduction}
+    \item what is the suggested solution for these problems till now - \textit{Introduction}
+    \item what is the actual contribution; a short description - \textit{Introduction, ...}
+    \item details of the solution - \textit{...}
+    \item conclusion and todos - \textit{Conclusion}
+\end{itemize}
+
+\section{Introduction}
+\subsection{Problem definition}
+% no \IEEEPARstart
+
+% --- What is the problem to solve? ---
+
+A software is a model of the reality. Like a map: must represent the reality with enough precision to give one the capability to find a suitable path from point A to B. It cannot describe the reality in its full depth and it should not in order to elevate the most relevant information. Cartographers are dealing with the "resolution" problem since the dawn of civilization, which gives them enough time to deal with it. However, software developers not so lucky. They have had significantly less time to figure out how to describe reality in a useful, but not unnecessarily complex way.
+
+Disregard of the development process, there's only one true specification of a software: \textit{its tests}. Therefore it is justified to specify the software through its tests from the beginning, and makes it the main communication channel between the business representatives and developers. BDD with its Gherkin language is a good fit for the job.
+
+% --- how to write good tests?, how to link it to the business requirements? => test pyramid => "minimum set of satisfactory requirements" => how??? => evolutionary process; ---
+
+However, when a testing framework is about to put into practice, many practical "low-level" questions are raised. Between those are the following:
+\begin{itemize}
+    \item What makes a good test?
+    \item What is the proper granularity of a test?
+    \item How can it be applied it to different "layers" of the application?
+    \item How many scenarios are enough?
+\end{itemize}
+
+To create a system, which reflects on these questions and issues, Mike Cohn's test pyramid can be handy. Though this approach is not perfect either. Some argue that the test pyramid's layers are not ideally split and its concepts are not properly defined. \cite{tpy.ek.leantesting, tpy.jc.tpyml} However, it can be accepted as common ground the more costly a given type of test is, the less should be applied. On the other hand with framework like react, angular and many others the cost of testing the UI is decreased to unit testing level - the original test boundaries are blurred.
+
+% --- how to test a system in a "good enough" manner? vs how to test a system with different channels, but without the complication of replication of scenarios => realise there's a hierarchy of the test cases => annotated gherkin ---
+
+Though we should automate our testing, automated tests were considered expensive to write and slow to deliver. Often the specification is finished after a feature had been developed and delivered.
+
+At the same time the cost of the testing not depends only on the execution time. It additionally sums up from the redundancy of the tests and the maintenance cost of them too. To minimize of the cost of these components not trivial. Testing must be automated and have to find a proper balance between a "perfectly tested system" and the "release without testing".
+
+If one find itself in a situation where some system must be optimized in a constantly changing environment, were over time the goal can be change as well, evolutionary optimization is always a good candidate. Therefore apply evolutionary methods in software specification and development in order to find the "the minimum set of satisfactory requirements" is rather justified. A requirement is "satisfactory" in this context if it compliant with the current knowledge of a system and doesn't contradict any of the existing description (if it does, it must be resolved). A given set of requirements is "minimal" if there's no redundant definition of features.
+
+The goal was to set up a working framework, where the minimum set of requirements will naturally manifest itself and automation is natural and well supported. This framework has to be capable to link the business with the development and mitigate the likelihood of misunderstanding or misinterpretation of the specification. As before, BDD - through the Gherkin language - is a perfect candidate for this role. Scenarios and steps of the Gherkin language can represent the generations which are selected by their usability according to their effectiveness in the communication between different parties (the Three Amigos if we stick to the BDD notions).
+
+\textit{The conjecture is that in such a working environment, where <process> a minimum set of semi-optimal ("satisfactory") set of scenarios will be defined. Therefore the development cost of tests are minimized, while the benefits of the test cases are maximized.} Therefore the benefits of the test cases are (locally) optimal at a given cost. Please note that this does not means full functional testing, neither eliminate fully the cost of "misunderstanding" between the different roles. It only articulate that fixing the cost, this method can provide a (local) optimum of the value of the testing. 
+
+\textit{The conjecture is that in such a working framework the a semi-optimal set of scenarios (and sentences) will be developed, thus this process approximate the minimal development cost of the product while maximize usefulness of the specification.}
+
+% This conjecture is supported by some of the main traits of the testing process:
+% \begin{enumerate}
+%     \item \textit{Minimize the size} of the specification. This is obvious, through the step definitions: if the same functions were called in the same order, the functionality is the same. On the other hand, since BDD's base is TDD, therefore only those functions are developed, which are tested at least with one scenario.
+%     \item \textit{Mitigate the likelihood of contradiction} in the specification. It turns out, if there's any contradiction there must be a point when a given test can be accepted, only if an other one fails. This can be resolved through update the specification. The reason why it only mitigate and does not rule out contradiction, because there's still some room for misinterpretation of the scenario.
+%     \item \textit{Provide a common understanding} between the stakeholders through the clean strict grammar and the ubiquitous language.
+%     \item \textit{Data driven} tests can be implemented. The \textit{Given} part of the communication ought to be built up through function composition.
+%     \item \textit{"Black box"} testing could be provided. The Gherkin language and the step definitions help focus on the business value and keep distance from the implementation itself.
+% \end{enumerate}
+
+\subsection{Solution summary}
+see the solutions above
+
+\section{Design considerations}
+% https://en.wikipedia.org/wiki/Domain-specific_language
+\subsection{Usage patterns}
+\subsection{Design goals}
+\subsection{Idioms}
+
+\section{Annotated Gherkins}
+\subsection{Grammar}
+\subsection{Suffixes as annotations}
+\subsection{Vocabulary and Contexts}
+
+\section{Implementation}
+\subsection{Architecture for testing}
+test as 3rd party; use only interfaces: this can be ui or RESTful API or... whatever.
+\subsection{Testing framework - World}
+sharing state between only steps => idea from functional programming: State... introduction of World => BeginScenario:instanciate World / EndScenario: free World => fluent api
+\subsection{Channel testing}
+
+\begin{algorithm}
+    \caption{Euclid’s algorithm}\label{euclid}
+    \begin{algorithmic}[1]
+        \Procedure{Euclid}{$a,b$}\Comment{The g.c.d. of a and b}
+        \State $r\gets a\bmod b$
+        \While{$r\not=0$}\Comment{We have the answer if r is 0}
+            \State $a\gets b$
+            \State $b\gets r$
+            \State $r\gets a\bmod b$
+        \EndWhile\label{euclidendwhile}
+        \State \textbf{return} $b$\Comment{The gcd is b}
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{lstlisting}[style=myScalastyle]
+object Test {
+   def main(args: Array[String]) {
+      var a = 0;
+      // for loop execution with a range
+      for( a <- 1 to 10){
+         println( "Value of a: " + a );
+      }
+   }
+}
+\end{lstlisting}
+
+
+\section{Conclusion}
+
+**********
+**********
+**********
+
+\subsection{The grammar}
+Since our test system implementation is based on BDD, we've used Gherkin language for scenario definition. In this section it is described, how its grammar is defined, with all the tailor job.
+
+The Gherkin language is declarative language, which has three main expression types: \textit{Given}, \textit{When} and \textit{Then}. These have different role therefore different grammar was defined for them. In order to understand the different role of these expressions, let's consider testing in the most abstract way. An imterpretation of abstract testing and its purpose can be seen on Figure ~\ref{fig.absSysTest}. The equivalence of this abstract model and the defined grammar described below.
+
+\begin{figure}[hbt!]
+    \caption{Abstract system testing}
+    \centering
+    \label{fig.absSysTest}
+  
+    \tikzstyle{decision} = [diamond, draw, fill=blue!20, text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+    \tikzstyle{block} = [rectangle, draw, fill=blue!20, text width=5em, text centered, rounded corners, minimum height=4em]
+    \tikzstyle{line} = [draw, -latex']
+    \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=2.5cm, minimum height=2em]
+    
+    % https://www.overleaf.com/learn/latex/Pgfplots_package
+    % http://www.texample.net/tikz/examples/tag/graphs/
+    % http://www.texample.net/tikz/examples/simple-flow-chart/
+    % https://www.overleaf.com/learn/latex/LaTeX_Graphics_using_TikZ:_A_Tutorial_for_Beginners_(Part_3)%E2%80%94Creating_Flowcharts
+    \begin{tikzpicture}[node distance = 2cm, auto]
+        % Place nodes
+        \node [block] (ts) {\[f\]};
+        \node [cloud, left of=ts] (in) {};
+        \node [cloud, above of=ts] (st) {State};
+        \node [cloud, right of=ts] (+) {+};
+        \node [cloud, below of=+, node distance=2cm] (exp) {Exp};
+        % Draw edges
+        \path [line,dashed] (in) -- node {IN} (ts);
+        \path [line,dashed] (ts) -- node {OUT} (+);
+        \path [line,dashed] (st) -- node {inject state} (ts);
+        \path [line] (exp) -- (+);
+        % \path [line] (decide) -| node [near start] {yes} (update);
+        % \path [line] (update) |- (identify);
+        % \path [line] (decide) -- node {no}(stop);
+    \end{tikzpicture}
+\end{figure}
+
+The blue box represents the system under test. The function \(f\) can be considered as an API method of the tested system. This is an abstract representation of a function, therefore it can represent any functionality in any channel. It can be a RESTful API or a UI. From functional testing point of view it does not differs. The idea here is that only the representation of the function, therefore the testing framework is different. We can test RESTful APIs with http calls, a web ui with Selenium, or an Android application with Selendroid - or any other tools of choice. 
+
+The abstract definition of the API which is called is 
+\begin{equation} \label{eq.apiFn}
+    f: IN \Rightarrow OUT
+\end{equation}
+
+In the every day practice, when we write a business application it is the rarest when a pure function can be tested. There always some side effect, which currently represented as the State, which must be injected. However, without limiting the generality it is reasonable assume that the given state can be created with other function of the tested system. Therefore the following holds:
+\begin{equation} \label{eq.stateAsComposition}
+    State \equiv f_{0} \circ f_{1} \circ ... \circ f_{n}
+\end{equation}
+, where \( \mathbb{F} = \{ f_{i} | i \in \mathbb{N} \} \) is the set of all methods of the tested system.
+
+Considering all the things above, now let's see how these are manifest themselves in the Gherkin language. In order to logically build up the grammar definition, the ordering of the discussion of these elements of the Gherkin language is different from the traditional. We'll start with \textit{When} and continue with \textit{Given}, \textit{Then}. The formalization of this flavour of Gherkin was rejected. Between the reasons there was to keep the flexibility of the plain Gherkin language; the lack of supporting tools and last but not least, the language should not become cumbersome for its users.
+
+The \textit{When} is the actual API under test. On Figure ~\ref{fig.absSysTest} this is represented by the blue box in the middle, whit \(f\) method. This leads us a few restrictions in regard of the grammar of it:
+\begin{enumerate}[label=w.\arabic*]
+    \item There's only one verb in the step definition, which represents the API function \(f\),
+    \item The conjunction \textit{And} is not allowed in the \textit{When} section,
+\end{enumerate}
+
+The \textit{Given} steps declares the state of the system. This is represented on the top of Figure ~\ref{fig.absSysTest}. The \textit{Given} grammar is according to the following rules:
+\begin{enumerate}[label=g.\arabic*]
+    \item The allowed verbs are the following: `to be`. In some case it is more convenient to use `have` or `exists`, but as a rule of thumb the `to be` is the most important and most common. Therefore a \textit{Given} step general form looks as the following:
+    % TODO: define properly the grammar, since the actual definition is not proper.
+    \begin{itemize}
+        \item \textit{Given \textsc{entity\(_{0} \)} exists}
+        \item \textit{Given \textsc{entity\(_{0} \)} is \textsc{value\(_{0} \)}}
+    \end{itemize}
+    The \textsc{entity\(_{0} \)} can be created by given combination of API calls. Therefore when a \textit{Given} step is declared, some of the formerly declared \textit{When} statements would be composed. In practice it can happen that the given function was not yet tested, in this case the direct system call will be applied.
+    \item The conjunction \textit{And} is allowed in the \text{Given} section,
+\end{enumerate}
+
+The \textit{Then} steps declares the assertion to the expected behaviour. Assertion of the expected result can be seen on the right side of Figure ~\ref{fig.absSysTest}. The \textit{Then} statement grammar is the following:
+\begin{enumerate}[label=t.\arabic*]
+    \item 'to be' and should are the most commonly used verb, however for convenience other verbs which has no meaning in the given context can be used too, such as 'have', 'exists',
+    \item The conjunction \textit{And} is allowed in the \text{Then} section,
+\end{enumerate}
+
+There are a few general rules, which true for all the statements. These are:
+\begin{enumerate}[label=r.\arabic*]
+    \item The steps are declarative and no denial phrase is allowed (for instance: instead of 'User "Bob" does not have right to open File A' the following should be used: 'User "Bob" can open File B'),
+    \item The steps are in present tense,
+    \item Condition cannot be defined in steps (no if statements),
+    \item \label{gen.Annttn} Each step can has a suffix in the following structure: \textit{<sentence> | <list of suffixes>}. These suffixes are called annotations, thus the scenario is annotated.
+    \item \label{gen.EntNm} Entities has names (for instance: 'User \textsc{bob} can open File \textsc{B}'),
+    \item \label{gen.SttShr}State sharing allowed only between steps withing a scenario (not between scenarios),
+    \item \label{gen.EntPrpSet}Properties for readability can be defined through Gherkin Examples, JSON files, CSV files or can be generated randomly based on the test needs.
+\end{enumerate}
+Few of the rules above worth to explain. Rule \ref{gen.EntNm} provides the capability to refer to different entities which were defined in previous steps. This is how states can be shared between steps, as it is described in the \ref{gen.SttShr}. Therefore if there's an \textsc{entity\(_{0} \)} with name \textit{\(E_{0}\)}, than in other steps, through name \textit{\(E_{0}\)} can be referred to \textsc{entity\(_{0} \)}. With this mechanism state can be shared between \textit{Given}, \textit{When}, \textit{Then} sections.
+
+Many times there are only a few important properties of a given entity which otherwise can have numerous properties. In order to keep the readability it was introduced that entities can be declared in JSON or CSV files, which helps to keep our feature files clean, without the noise of unimportant variables. This was the motivation behind introducing rule \ref{gen.EntPrpSet}; this is only for practicality purposes.
+
+\subsection{Annotation suffixes on steps}
+
+So far we've seen what are the rules to write an effective test
+As it was described in \ref{gen.Annttn} a sentence can have a suffix in the annotated Gherkin scenarios.
+There are the following suffixes distinguished:
+    \begin{itemize}
+        \item \textit{raw}: which means this line has a pure business definition. In different context this must be tested in different way.
+        \item \textit{api}
+        \item \textit{ui}
+        \item \textit{mob}
+        \item \textit{blueprint}
+    \end{itemize}
+
+Each of these suffixes can refer to a specific version of the channel it represents. So \textit{api\_v\(_{i}\)} refers to the \(i^{th}\) version of the RESTful API of the given system.
+
+\subsection{The vocabulary and its context}
+Our every day interactions - both orally and writing - are rely on the assumption that the communicating parties have the same definitions of the different notions. Though it is obviously not the case, most of the cases these vague understanding are acceptable. However, when a problem must be formalized - this is inevitable because of the programming - this is not enough any more.
+
+The vocabulary is the body of words, which defines the domain. It contains the list of difficult, unfamiliar, misunderstandable or misinterpretable words with an explanation of their meaning. Words can be referred as their common meaning and its particular meaning which is in the vocabulary. Earlier word start with lowercase latter starts with uppercase letter.
+
+Vocabulary helps to identify and define bounded contexts as well. Collision or overlapping in definitions of words are good indicators to split up the functionality of the module and define a new bounded context too.
+
+\subsection{Testing cost considerations}
+todo:
+Cost of testing in our case consists of the following: cost of creating scenarios, cost of step definition implementation, cost of running the tests. Data driven testing. All the time the state must be created from scratch. That can be costly. However, test pyramid will do lower level tests, the scenarios are only for testing the general business functionality of the system.
+On the benefits side there's the less communication cost, less errors, less catch up time for newcomers, easier hand over, faster bugfixing.
+minimal amount of code and code coverage.
+
+
+************************************************************
+
+\begin{enumerate}
+    % \item create a reference frame, where the evolution is happening
+    % \item in this world the scenarios and sentences are which should be compete for "survive"
+    % \item Theorem: in such an environment a semi-optimal (minimal) set of scenarios (and sentences) will be developed, thus this process minimize the cost while provide the maximum cover of the functionality
+    \item what code coverage means in this environment? how defensive programming should minimize its effect?
+    % \item Gherkin grammar: declarative, not imperative. The role of the Given, When, Then (State definition, action to be tested, assertion of the expected behavior)
+        % \begin{enumerate}
+        %     \item Given grammar: allowed verbs: different forms of 'to be', 'exists', 'have'. Cannot contains conditions. A given \textit{always} a composition of formerly defined verb implementations (functions).
+        %     \item When grammar: a sentence, which contains only one verb. Cannot contains conditions.
+        %     \item Then grammar: allowed verbs: different forms of 'to be', 'exists', 'have', should. 
+        % \end{enumerate}
+    \item Gherkin vocabulary:
+        \begin{enumerate}
+            \item define the notions
+            \item verb are the function, which will be called on the API, or represented is some way on the UI (or any other channel)
+        \end{enumerate}
+    \item Gherkin annotations:
+        \begin{enumerate}
+            \item why annotations are necessary
+            \item what do they represent: the extension of a step, actually it contains channel specific verbs. The annotated sentences apply only a specific channel.
+            \item how can they be implemented
+        \end{enumerate}
+    \item the process of writing scenarios:
+        \begin{enumerate}
+            \item write down the main functionality of a service in one scenario. If there's any state in the 'Given' section which cannot be created with any of the formerly defined verbs (in the 'When' statements) then create at least one new scenario, with a newly defined verb, which is tested there. This is the process of 'unfolding the scenarios'. At the end of this process the 'raw gherkin feature files' will exists.
+            \item this process will ensure the minimum number of functions and the "shortest cut" to the expected functionality.
+            \item extend 'raw gherkins' as required
+        \end{enumerate}
+    \item how to reason about the code with the function composition? \( verb   \Rightarrow fi \Rightarrow f0 \circ f1 \circ f2 \circ ... \circ fn \)
+    \item data driven testing
+    \item other usability of the extensions: system blueprints / configurations.
+    \item cons: changes in the language cause lot's of update; hard to get used to the declarative style; complexity of expressing time related issues (declarative language knows only the now... Given - past; When - now, but it cannot be define order in the Given section - at least on the language level); ???
+\end{enumerate}
+
+
+*********
+
+The following traits are represents the frame of such a system:
+\begin{enumerate}
+  \item existence of "medium" / channel where information flows between business and developers. (Feature files, Ghekrin grammar, defined vocab, "population" of steps and scenarios)
+  \item existence of a process which optimize the information in the channel. (meetings, where the steak holders evolve the scenarios and notions)
+  \item 
+\end{enumerate}
+
+The 
+
+An other problem which developers face with in a general case is testing the different APIs of the system is under development. 
+
+In order to have an effective testing method, it is expected that all the system APIs (RESTful APIs, Queues, UIs, Mobile apps) are tested through the same process. The problems here are the following:
+-- need find a method to work on all the channels
+% You must have at least 2 lines in the paragraph with the drop letter
+% (should never be an issue)
+
+\hfill Istvan, Papp
+ 
+\hfill February 27, 2019
+
+\subsection{Subsection Heading Here}
+Subsection text here.
+
+
+\subsubsection{Subsubsection Heading Here}
+Subsubsection text here.
+
+
+% An example of a floating figure using the graphicx package.
+% Note that \label must occur AFTER (or within) \caption.
+% For figures, \caption should occur after the \includegraphics.
+% Note that IEEEtran v1.7 and later has special internal code that
+% is designed to preserve the operation of \label within \caption
+% even when the captionsoff option is in effect. However, because
+% of issues like this, it may be the safest practice to put all your
+% \label just after \caption rather than within \caption{}.
+%
+% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
+% option should be used if it is desired that the figures are to be
+% displayed while in draft mode.
+%
+% \begin{figure}[!t]
+% \centering
+% \includegraphics[width=2.5in]{myfigure}
+% where an .eps filename suffix will be assumed under latex, 
+% and a .pdf suffix will be assumed for pdflatex; or what has been declared
+% via \DeclareGraphicsExtensions.
+% \caption{Simulation Results.}
+% \label{fig_sim}
+% \end{figure}
+
+% Note that IEEE typically puts floats only at the top, even when this
+% results in a large percentage of a column being occupied by floats.
+
+
+% An example of a double column floating figure using two subfigures.
+% (The subfig.sty package must be loaded for this to work.)
+% The subfigure \label commands are set within each subfloat command,
+% and the \label for the overall figure must come after \caption.
+% \hfil is used as a separator to get equal spacing.
+% Watch out that the combined width of all the subfigures on a 
+% line do not exceed the text width or a line break will occur.
+%
+%\begin{figure*}[!t]
+%\centering
+%\subfloat[Case I]{\includegraphics[width=2.5in]{box}%
+%\label{fig_first_case}}
+%\hfil
+%\subfloat[Case II]{\includegraphics[width=2.5in]{box}%
+%\label{fig_second_case}}
+%\caption{Simulation results.}
+%\label{fig_sim}
+%\end{figure*}
+%
+% Note that often IEEE papers with subfigures do not employ subfigure
+% captions (using the optional argument to \subfloat[]), but instead will
+% reference/describe all of them (a), (b), etc., within the main caption.
+
+
+% An example of a floating table. Note that, for IEEE style tables, the 
+% \caption command should come BEFORE the table. Table text will default to
+% \footnotesize as IEEE normally uses this smaller font for tables.
+% The \label must come after \caption as always.
+%
+%\begin{table}[!t]
+%% increase table row spacing, adjust to taste
+%\renewcommand{\arraystretch}{1.3}
+% if using array.sty, it might be a good idea to tweak the value of
+% \extrarowheight as needed to properly center the text within the cells
+%\caption{An Example of a Table}
+%\label{table_example}
+%\centering
+%% Some packages, such as MDW tools, offer better commands for making tables
+%% than the plain LaTeX2e tabular which is used here.
+%\begin{tabular}{|c||c|}
+%\hline
+%One & Two\\
+%\hline
+%Three & Four\\
+%\hline
+%\end{tabular}
+%\end{table}
+
+
+% Note that IEEE does not put floats in the very first column - or typically
+% anywhere on the first page for that matter. Also, in-text middle ("here")
+% positioning is not used. Most IEEE journals/conferences use top floats
+% exclusively. Note that, LaTeX2e, unlike IEEE journals/conferences, places
+% footnotes above bottom floats. This can be corrected via the \fnbelowfloat
+% command of the stfloats package.
+
+
+
+\section{Conclusion}
+The conclusion goes here.
+
+
+
+
+% conference papers do not normally have an appendix
+
+
+% use section* for acknowledgement
+\section*{Acknowledgment}
+
+
+The authors would like to thank...
+
+
+
+
+
+% trigger a \newpage just before the given reference
+% number - used to balance the columns on the last page
+% adjust value as needed - may need to be readjusted if
+% the document is modified later
+%\IEEEtriggeratref{8}
+% The "triggered" command can be changed if desired:
+%\IEEEtriggercmd{\enlargethispage{-5in}}
+
+% references section
+
+% can use a bibliography generated by BibTeX as a .bbl file
+% BibTeX documentation can be easily obtained at:
+% http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
+% The IEEEtran BibTeX style support page is at:
+% http://www.michaelshell.org/tex/ieeetran/bibtex/
+%\bibliographystyle{IEEEtran}
+% argument is your BibTeX string definitions and bibliography database(s)
+%\bibliography{IEEEabrv,../bib/paper}
+%
+% <OR> manually copy in the resultant .bbl file
+% set second argument of \begin to the number of references
+% (used to reserve space for the reference number labels box)
+\begin{thebibliography}{1}
+\bibitem{swprj.ssh}
+Project Smart: \emph{The Standish Group Report} \url{https://bit.ly/1JFKOwF}
+
+\bibitem{swprj.sf}
+Sharon Florentine: \emph{IT project success rates finally improving} \url{https://bit.ly/2GvoaQG}
+
+\bibitem{tpy.hv}
+Ham Vocke: \emph{The Practical Test Pyramid} \url{https://martinfowler.com/articles/practical-test-pyramid.html}
+
+\bibitem{tpy.jc.tpyml}
+Joe Colantonio: \emph{Why the Testing Pyramid is Misleading} \url{https://www.joecolantonio.com/testing-pyramid/}
+
+\bibitem{tpy.ek.leantesting}
+Eugen Kiss: \emph{Lean Testing or Why Unit Tests are Worse than You Think} \url{https://blog.usejournal.com/lean-testing-or-why-unit-tests-are-worse-than-you-think-b6500139a009}
+
+\bibitem{bdd.tsundberg}
+Thomas Sundberg: \emph{Where should you use Behaviour-Driven Development?} \url{https://bit.ly/2SRVkQb}
+
+\bibitem{bdd.cturner}
+Chris Turner: \emph{The Best Way to Apply BDD} \url{https://bit.ly/2ByKcxO}
+
+\bibitem{bdd.lshao}
+Lingkai Shao: \emph{How To Use Gherkin And Espresso For Android Test Automation} \url{https://bit.ly/2TPjBUo}
+
+\bibitem{bdd.rruiz}
+Rafael Ruiz: \emph{BDD: User Interface Testing} \url{https://bit.ly/2BD0R3o}
+
+\bibitem{cucumber.manual_ui}
+Cucumber documentation \emph{Browser Automation}
+\url{https://bit.ly/2SOI1QJ}
+
+\bibitem{bdd.ea}
+Enrique Amodeo: \emph{Learning Behavior-driven Development with JavaScript} Birmingham B3 2PB, UK.: Packt Publishing, 2015.
+
+\bibitem{bdd.jfs}
+John Ferguson Smart: \emph{BDD in Action} Shelter Island, NY 11964: Manning Publications Co., 2015.
+
+\bibitem{bdd.ismwah}
+Ian Dees, Matt Wynne, Aslak Hellesøy: \emph{Cucumber Recipes} The Pragmatic Programmers, LLC, 2013.
+
+\bibitem{bdd.srmwah}
+Seb Rose, Matt Wynne, Aslak Hellesøy: \emph{The Cucumber for Java Book} The Pragmatic Programmers, LLC., 2015.
+
+\bibitem{bdd.dc.rspecbook}
+David Chelimsky with Dave Astels, Zach Dennis, Aslak Hellesøy, Bryan Helmkamp, Dan North: \emph{The RSpec Book} Behaviour-Driven Development with RSpec, Cucumber, and Friends The Pragmatic Programmers, LLC., 2010
+
+\bibitem{bdd.ccmmms.vfyapp}
+Christian Colombo, Mark Micallef, Mark Scerri: \emph{VerifyingWeb Applications: From Business Level
+Specifications to Automated Model-Based Testing} PEST Research Lab, Department of Computer Science, University of Malta, Malta \url{fchristian.colombo / mark.micallef / msce0013g@um.edu.mt}
+
+\bibitem{IEEEhowto:kopka}
+H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
+  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+
+\end{thebibliography}
+
+
+
+
+% that's all folks
+\end{document}
