@@ -1,19 +1,28 @@
 package ebdd
 
 import cats.data._
+import cats.effect.IO
+import cats.effect.concurrent.Ref
 import org.scalatest.Assertion
 import org.scalatest.Assertions.fail
 import ebdd.CategoryConverters._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
-import scala.concurrent.{ Await, Future }
+import scala.concurrent.{Await, Future}
 import scala.language.postfixOps
-import scala.util.{ Failure, Success, Try }
+import scala.util.{Failure, Success, Try}
 
 // TODO: unify cucumber references in different projects (!) - cucumberLibs
 // TODO: update cucumber libs to the newest releases (2.0.1 -> 4.2.0 / 2.4.0 -> 4.2.2)
 class World {
+
+  // WARNING: immutable.List is thread safe by default. However parallel execution can
+  //          cause still problems, since there can be race condition between parallely
+  //          executed assignments.
+  //          See: AsyncWordSpec which is used in the tests.
+  var history = List[RequestResponse[_, _]]()
+  val history2 = Ref.of[IO, List[RequestResponse[_, _]]](List.empty[RequestResponse[_, _]]).unsafeRunSync()
 
   type ET[T] = Either[Throwable, T]
   type FE[T] = EitherT[Future, Throwable, T]
@@ -37,9 +46,9 @@ class World {
 
     def evaluateIds(): Future[(RequestResponse[RQ, RSP], String)] = fId(this).map(r => (this, r))
 
-    def toFutureRSP(): Future[RSP] = this.response.toFuture()
+    def toFutureRSP: Future[RSP] = this.response.toFuture()
 
-    def toRSP(timeout: Duration = 3 seconds): RSP = Await.result(toFutureRSP(), timeout)
+    def toRSP(timeout: Duration = 3 seconds): RSP = Await.result(toFutureRSP, timeout)
   }
 
   //  private val logger = LoggerFactory.getLogger(this.getClass)
@@ -80,6 +89,7 @@ class World {
       val response = srvCall(request)
       val futureither = EitherT(response.map(Right(_)) recover { case t => Left(t) })
       history = history :+ RequestResponse(srvCall, request, futureither, idFunction)
+      history2.update(_ :+ RequestResponse(srvCall, request, futureither, idFunction))
       response
     }
   }
@@ -118,8 +128,9 @@ class World {
     val futureither: FE[RSP] = EitherT(response.map(Right(_)) recover { case t => Left(t) })
 
     // todo: update properly
-    val idFunction: HRecId[RQ, RSP] = { case in: RequestResponse[RQ, RSP] => Future.successful(s"auto-${history.size}") }
+    val idFunction: HRecId[RQ, RSP] = { case _: RequestResponse[RQ, RSP] => Future.successful(s"auto-${history.size}") }
     history = history :+ RequestResponse(srvCall, request, futureither, idFunction)
+    history2.update(_ :+ RequestResponse(srvCall, request, futureither, idFunction))
 
     response
   }
@@ -203,10 +214,8 @@ class World {
     }
 
     val f = responses.map {
-      _ match {
-        case list if (list.size == paramsList.size) => (testFn orElse fb)(list)
-        case msg => fail(s"Unexpected number of parameters. [$msg]")
-      }
+      case list if list.size == paramsList.size => (testFn orElse fb) (list)
+      case msg => fail(s"Unexpected number of parameters. [$msg]")
     }
 
     Await.result(f, atMost)
@@ -313,7 +322,7 @@ class World {
   /**
    * Synchronous call to get a record from the history identified by listOfHistoryRecIds.
    *
-   * @param listOfHistoryRecIds
+   * @param listOfHistoryRecIds list of the ids, that are looked after in the state (history)
    * @param atMost duration which specifies the timeout to wait to finish all the service call Futures in history.
    * @tparam RSP RSP the expected return type
    * @return with list of objects, which were found. Errors handled by Try.
@@ -336,18 +345,12 @@ class World {
     updateWorld({ _: Request => Future.successful(itCall) }, request)
   }
 
-  // WARNING: immutable.List is thread safe by default. However parallel execution can
-  //          cause still problems, since there can be race condition between parallely
-  //          executed assignments.
-  //          See: AsyncWordSpec which is used in the tests.
-  var history = List[RequestResponse[_, _]]()
-
   /**
    * Clear history from all records it contains.
    *
    * @return the new, empty history
    */
-  def clear() = {
+  def clear(): List[RequestResponse[_, _]] = {
     history = List[RequestResponse[_, _]]()
     history
   }
